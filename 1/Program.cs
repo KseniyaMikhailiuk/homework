@@ -96,7 +96,7 @@ namespace _1
                         isExitKeyPressed = true;
                         break;
                     default:
-                        Console.WriteLine("Something went wrong. Try again.");
+                        Console.WriteLine("Something went wrong. Try again.:)");
                         break;
                 }
 

@@ -5,3 +5,10 @@ C:\Users\дэл\Desktop\qwerty\1\1\bin\Debug\1.exe
 C:\Users\дэл\Desktop\qwerty\1\1\bin\Debug\1.pdb
 C:\Users\дэл\Desktop\qwerty\1\1\obj\Debug\1.exe
 C:\Users\дэл\Desktop\qwerty\1\1\obj\Debug\1.pdb
+C:\Users\дэл\Desktop\qwerty\homework1\1\bin\Debug\1.exe.config
+C:\Users\дэл\Desktop\qwerty\homework1\1\bin\Debug\1.exe
+C:\Users\дэл\Desktop\qwerty\homework1\1\bin\Debug\1.pdb
+C:\Users\дэл\Desktop\qwerty\homework1\1\obj\Debug\1.csprojResolveAssemblyReference.cache
+C:\Users\дэл\Desktop\qwerty\homework1\1\obj\Debug\1.csproj.CoreCompileInputs.cache
+C:\Users\дэл\Desktop\qwerty\homework1\1\obj\Debug\1.exe
+C:\Users\дэл\Desktop\qwerty\homework1\1\obj\Debug\1.pdb
