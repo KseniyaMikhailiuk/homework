@@ -1,65 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace _1
+namespace MagiciansAgainstWarriorsGame
 {
-    internal class Player
-    {
-        public void step()
-        {
-            Console.WriteLine("Your character made a step");
-        }
-        public void jump()
-        {
-            Console.WriteLine("Your character jumped");
-        }
-        public void sitDown()
-        {
-            Console.WriteLine("Your character sat down");
-        }
-    }
-
-    internal class Warrior : Player
-    {
-        public void hitWithSword()
-        {
-            Console.WriteLine("Your character hit with sword");
-        }
-    }
-    internal class Magician : Player
-    {
-        public void castSpell()
-        {
-            Console.WriteLine("Your character cast a spell");
-        }
-    }
-
     class Program
     {
-        static void gameProcessWarrior(ref Warrior warrior)
+
+        static void gameProcessWarrior(Warrior warrior)
         {
-            //Console.WriteLine("Select action. 1 - make a step. 2 - jump. 3 - sit down. 4 - hit with sword. 5 - exit.");
             bool isExitKeyPressed = false;
-            while (isExitKeyPressed != true)
+            while (!isExitKeyPressed)
             {
                 Console.WriteLine("Select action. 1 - make a step. 2 - jump. 3 - sit down. 4 - hit with sword. 5 - exit.");
                 string pressedKey = Console.ReadLine();
                 switch (pressedKey)
                 {
                     case ("1"):
-                        warrior.step();
+                        warrior.makeCharacterStep();
                         break;
                     case ("2"):
-                        warrior.jump();
+                        warrior.makeCharacterJump();
                         break;
                     case ("3"):
-                        warrior.sitDown();
+                        warrior.makeCharacterSitDown();
                         break;
                     case ("4"):
-                        warrior.hitWithSword();
+                        warrior.makeCharacterHitWithSword();
                         break;
                     case ("5"):
                         isExitKeyPressed = true;
@@ -70,27 +35,26 @@ namespace _1
                 }
             }
         }
-        static void gameProcessMagician(ref Magician magician)
+        static void gameProcessMagician(Magician magician)
         {
-            //Console.WriteLine("Select action. 1 - make a step. 2 - jump. 3 - sit down. 4 - cast a spell. 5 - exit.");
             bool isExitKeyPressed = false;
-            while (isExitKeyPressed != true)
+            while (!isExitKeyPressed)
             {
                 Console.WriteLine("Select action. 1 - make a step. 2 - jump. 3 - sit down. 4 - cast a spell. 5 - exit.");
                 string pressedKey = Console.ReadLine();
                 switch (pressedKey)
                 {
                     case ("1"):
-                        magician.step();
+                        magician.makeCharacterStep();
                         break;
                     case ("2"):
-                        magician.jump();
+                        magician.makeCharacterJump();
                         break;
                     case ("3"):
-                        magician.sitDown();
+                        magician.makeCharacterSitDown();
                         break;
                     case ("4"):
-                        magician.castSpell();
+                        magician.makeCharacterCastSpell();
                         break;
                     case ("5"):
                         isExitKeyPressed = true;
@@ -106,23 +70,22 @@ namespace _1
 
         static void Main(string[] args)
         {
-             //Console.WriteLine("Select a character. 1 - warrior. 2 - magician.");
-             bool correctKey = false;
-             while (correctKey != true)
+             bool isKeyCorrect = false;
+             while (!isKeyCorrect)
              {
                 Console.WriteLine("Select a character. 1 - warrior. 2 - magician.");
                 string pressedKey = Console.ReadLine();
                  switch (pressedKey)
                  {
                      case "1":
-                         Warrior warrior = new Warrior();
-                         gameProcessWarrior(ref warrior);
-                         correctKey = true;
+                         var warrior = new Warrior();
+                         gameProcessWarrior(warrior);
+                         isKeyCorrect = true;
                          break;
                      case "2":
-                         Magician magician = new Magician();
-                        gameProcessMagician(ref magician);
-                         correctKey = true;
+                         var magician = new Magician();
+                         gameProcessMagician(magician);
+                         isKeyCorrect = true;
                          break;
                      default:
                          Console.WriteLine("Something went wrong. Try again.");
