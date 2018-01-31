@@ -4,7 +4,21 @@ namespace MagiciansAgainstWarriorsGame
 {
     class Program
     {
-
+        static void gameProcessCharacter(Character character, string pressedKey)
+        {
+            switch (pressedKey)
+            {
+                case ("1"):
+                    character.makeCharacterStep();
+                    break;
+                case ("2"):
+                    character.makeCharacterJump();
+                    break;
+                case ("3"):
+                    character.makeCharacterSitDown();
+                    break;
+            }
+        }
         static void gameProcessWarrior(Warrior warrior)
         {
             bool isExitKeyPressed = false;
@@ -12,26 +26,27 @@ namespace MagiciansAgainstWarriorsGame
             {
                 Console.WriteLine("Select action. 1 - make a step. 2 - jump. 3 - sit down. 4 - hit with sword. 5 - exit.");
                 string pressedKey = Console.ReadLine();
-                switch (pressedKey)
+                if ((pressedKey == "1") || (pressedKey == "2") || (pressedKey == "3"))
                 {
-                    case ("1"):
-                        warrior.makeCharacterStep();
-                        break;
-                    case ("2"):
-                        warrior.makeCharacterJump();
-                        break;
-                    case ("3"):
-                        warrior.makeCharacterSitDown();
-                        break;
-                    case ("4"):
+                    gameProcessCharacter(warrior, pressedKey);
+                }
+                else
+                {
+                    if (pressedKey == "4")
+                    {
                         warrior.makeCharacterHitWithSword();
-                        break;
-                    case ("5"):
-                        isExitKeyPressed = true;
-                        break;
-                    default:
-                        Console.WriteLine("Something went wrong. Try again.");
-                        break;
+                    }
+                    else
+                    {
+                        if (pressedKey == "5")
+                        {
+                            isExitKeyPressed = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Something went wrong. Try again.");
+                        }
+                    }
                 }
             }
         }
@@ -42,29 +57,28 @@ namespace MagiciansAgainstWarriorsGame
             {
                 Console.WriteLine("Select action. 1 - make a step. 2 - jump. 3 - sit down. 4 - cast a spell. 5 - exit.");
                 string pressedKey = Console.ReadLine();
-                switch (pressedKey)
+                if ((pressedKey == "1") || (pressedKey == "2") || (pressedKey == "3"))
                 {
-                    case ("1"):
-                        magician.makeCharacterStep();
-                        break;
-                    case ("2"):
-                        magician.makeCharacterJump();
-                        break;
-                    case ("3"):
-                        magician.makeCharacterSitDown();
-                        break;
-                    case ("4"):
-                        magician.makeCharacterCastSpell();
-                        break;
-                    case ("5"):
-                        isExitKeyPressed = true;
-                        break;
-                    default:
-                        Console.WriteLine("Something went wrong. Try again.:)");
-                        break;
+                    gameProcessCharacter(magician, pressedKey);
                 }
-
-
+                else
+                {
+                    if (pressedKey == "4")
+                    {
+                        magician.makeCharacterCastSpell();
+                    }
+                    else
+                    {
+                        if (pressedKey == "5")
+                        {
+                            isExitKeyPressed = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Something went wrong. Try again.");
+                        }
+                    }
+                }
             }
         }
 
