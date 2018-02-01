@@ -4,15 +4,15 @@ namespace MagiciansAgainstWarriorsGame
 {
     public class Character
     {
-        public void makeCharacterStep()
+        public void Step()
         {
             Console.WriteLine("Your character made a step");
         }
-        public void makeCharacterJump()
+        public void Jump()
         {
             Console.WriteLine("Your character jumped");
         }
-        public void makeCharacterSitDown()
+        public void SitDown()
         {
             Console.WriteLine("Your character sat down");
         }

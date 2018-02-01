@@ -4,22 +4,22 @@ namespace MagiciansAgainstWarriorsGame
 {
     class Program
     {
-        static void gameProcessCharacter(Character character, string pressedKey)
+        static void RealizeGameProcessCharacter(Character character, string pressedKey)
         {
             switch (pressedKey)
             {
                 case ("1"):
-                    character.makeCharacterStep();
+                    character.Step();
                     break;
                 case ("2"):
-                    character.makeCharacterJump();
+                    character.Jump();
                     break;
                 case ("3"):
-                    character.makeCharacterSitDown();
+                    character.SitDown();
                     break;
             }
         }
-        static void gameProcessWarrior(Warrior warrior)
+        static void RealizeGameProcessWarrior(Warrior warrior)
         {
             bool isExitKeyPressed = false;
             while (!isExitKeyPressed)
@@ -34,7 +34,7 @@ namespace MagiciansAgainstWarriorsGame
                 {
                     if (pressedKey == "4")
                     {
-                        warrior.makeCharacterHitWithSword();
+                        warrior.HitWithSword();
                     }
                     else
                     {
@@ -50,7 +50,7 @@ namespace MagiciansAgainstWarriorsGame
                 }
             }
         }
-        static void gameProcessMagician(Magician magician)
+        static void RealizeGameProcessMagician(Magician magician)
         {
             bool isExitKeyPressed = false;
             while (!isExitKeyPressed)
@@ -65,7 +65,7 @@ namespace MagiciansAgainstWarriorsGame
                 {
                     if (pressedKey == "4")
                     {
-                        magician.makeCharacterCastSpell();
+                        magician.CastSpell();
                     }
                     else
                     {
