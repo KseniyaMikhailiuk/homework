@@ -28,7 +28,7 @@ namespace MagiciansAgainstWarriorsGame
                 string pressedKey = Console.ReadLine();
                 if ((pressedKey == "1") || (pressedKey == "2") || (pressedKey == "3"))
                 {
-                    gameProcessCharacter(warrior, pressedKey);
+                    RealizeGameProcessCharacter(warrior, pressedKey);
                 }
                 else
                 {
@@ -59,7 +59,7 @@ namespace MagiciansAgainstWarriorsGame
                 string pressedKey = Console.ReadLine();
                 if ((pressedKey == "1") || (pressedKey == "2") || (pressedKey == "3"))
                 {
-                    gameProcessCharacter(magician, pressedKey);
+                    RealizeGameProcessCharacter(magician, pressedKey);
                 }
                 else
                 {
@@ -82,6 +82,8 @@ namespace MagiciansAgainstWarriorsGame
             }
         }
 
+
+
         static void Main(string[] args)
         {
              bool isKeyCorrect = false;
@@ -93,12 +95,12 @@ namespace MagiciansAgainstWarriorsGame
                  {
                      case "1":
                          var warrior = new Warrior();
-                         gameProcessWarrior(warrior);
+                         RealizeGameProcessWarrior(warrior);
                          isKeyCorrect = true;
                          break;
                      case "2":
                          var magician = new Magician();
-                         gameProcessMagician(magician);
+                         RealizeGameProcessMagician(magician);
                          isKeyCorrect = true;
                          break;
                      default:
