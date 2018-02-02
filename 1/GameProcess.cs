@@ -13,99 +13,95 @@ namespace MagiciansAgainstWarriorsGame
             SpacialAction,
             Exit
         }
-        private string selectedCharacter = "";
+        enum eCharacter
+        {
+            Warrior = 1,
+            Magician
+        }
+        
         public void StartGame()
         {
-            bool isKeyRight = false;
-            while (!isKeyRight)
+            eCharacter character;
+            bool isCharacterSelected = false;
+            while (!isCharacterSelected)
             {
                 Console.WriteLine("Select character. 1 - warrior. 2 - magician.");
-                selectedCharacter = Console.ReadLine();
-                if ((selectedCharacter == "1") || (selectedCharacter == "2"))
+                if (int.TryParse(Console.ReadLine(), out int selectedCharacter))
                 {
-                    isKeyRight = true;
+                    if (Enum.IsDefined((typeof(eCharacter)), selectedCharacter))
+                    {
+                        character = (eCharacter)Convert.ToInt32(selectedCharacter);
+                        isCharacterSelected = true;
+                        if (character == eCharacter.Warrior)
+                        {
+                            GetInstraction(eCharacter.Warrior);
+                        }
+                        else
+                        {
+                            GetInstraction(eCharacter.Magician);
+                        }
+                    }
                 }
             }
-            if (selectedCharacter == "1")
+
+        }
+
+        static void GetInstraction(eCharacter character)
+        {
+            var warrior = new Warrior();
+            var magician = new Magician();
+            Action action;
+            while (true)
             {
-                var warrior = new Warrior();
-                RealizeGameProcessWarrior(warrior);
+                Console.WriteLine("Select action. 1 - make a step. 2 - jump. 3 - sit down. 4 - special action. 5 - exit.");
+                if (int.TryParse(Console.ReadLine(), out int pressedKey))
+                {
+                    if (Enum.IsDefined((typeof(Action)), pressedKey))
+                    {
+                        action = (Action)Convert.ToInt32(pressedKey);
+                        if (character == eCharacter.Warrior)
+                        {
+                            RealizeGameProcessWarrior(action, warrior);
+                        }
+                        else
+                        {
+                            RealizeGameProcessMagician(action, magician);
+                        }
+                        continue;
+                    }
+                }
+                Console.WriteLine("Something went wrong. Try again.");
+            }
+        }
+
+        static void RealizeGameProcessWarrior(Action action, Warrior warrior)
+        {
+            if ((((int)action < 4) && (action > 0)) || ((int)action == 5))
+            {
+                RealizeGameProcessCharacter(warrior, action);
             }
             else
             {
-                var magician = new Magician();
-                RealizeGameProcessMagician(magician);
-            }
-        }
-
-        static void RealizeGameProcessWarrior(Warrior warrior)
-        {
-            Action action;
-            string pressedKey;
-            bool isExitKeyPressed = false;
-            while (!isExitKeyPressed)
-            {
-                Console.WriteLine("Select action. 1 - make a step. 2 - jump. 3 - sit down. 4 - cast a spell. 5 - exit.");
-                pressedKey = Console.ReadLine();
-                action = (Action)Convert.ToInt32(pressedKey);
-                if (((int)action < 4) && ((int)action > 0))
+                if (action == Action.SpacialAction)
                 {
-                    RealizeGameProcessCharacter(warrior, action);
-                }
-                else
-                {
-                    if (action == Action.SpacialAction)
-                    {
-                        warrior.HitWithSword();
-                    }
-                    else
-                    {
-                        if (action == Action.Exit)
-                        {
-                            isExitKeyPressed = true;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Something went wrong. Try again.");
-                        }
-                    }
+                    warrior.HitWithSword();
                 }
             }
         }
 
-        static void RealizeGameProcessMagician(Magician magician)
+        static void RealizeGameProcessMagician(Action action, Magician magician)
         {
-            Action action;
-            string pressedKey;
-            bool isExitKeyPressed = false;
-            while (!isExitKeyPressed)
+            if ((((int)action < 4) && (action > 0)) || ((int)action == 5))
             {
-                Console.WriteLine("Select action. 1 - make a step. 2 - jump. 3 - sit down. 4 - cast a spell. 5 - exit.");
-                pressedKey = Console.ReadLine();
-                action = (Action)Convert.ToInt32(pressedKey);
-                if (((int)action < 4) && ((int)action > 0))
-                {
-                    RealizeGameProcessCharacter(magician, action);
-                }
-                else
-                {
-                    if (action == Action.SpacialAction)
-                    {
-                        magician.CastSpell();
-                    }
-                    else
-                    {
-                        if (action == Action.Exit)
-                        {
-                            isExitKeyPressed = true;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Something went wrong. Try again.");
-                        }
-                    }
-                }
+                RealizeGameProcessCharacter(magician, action);
             }
+            else
+            {
+                if (action == Action.SpacialAction)
+                {
+                    magician.CastSpell();
+                }
+            }    
         }
         static void RealizeGameProcessCharacter(Character character, Action action)
         {
@@ -119,6 +115,9 @@ namespace MagiciansAgainstWarriorsGame
                     break;
                 case Action.SitDown:
                     character.SitDown();
+                    break;
+                case Action.Exit:
+                    Environment.Exit(0);
                     break;
             }
         }

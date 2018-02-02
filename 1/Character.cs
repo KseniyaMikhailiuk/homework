@@ -2,7 +2,7 @@
 
 namespace MagiciansAgainstWarriorsGame
 {
-    /*abstract*/ public class Character
+    abstract public class Character
     {
         public void Step()
         {
