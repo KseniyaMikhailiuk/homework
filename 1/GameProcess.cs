@@ -4,10 +4,13 @@ namespace MagiciansAgainstWarriorsGame
 {
     public class GameProcess
     {
-        public Character character;
+        Character _character;
+        ActionTypes _action;
+
+
         public void StartGame()
         {
-            CharacterTypes character;
+            CharacterTypes characterType;
             bool isCharacterSelected = false;
             while (!isCharacterSelected)
             {
@@ -18,55 +21,64 @@ namespace MagiciansAgainstWarriorsGame
                 {
                     if (Enum.IsDefined((typeof(CharacterTypes)), selectedCharacter))
                     {
-                        character = (CharacterTypes)Convert.ToInt32(selectedCharacter);
+                        characterType = (CharacterTypes)Convert.ToInt32(selectedCharacter);
                         isCharacterSelected = true;
-                        GetInstruction(character);
+                        Play(characterType);
                     }
                 }
             }
         }
 
-        void GetInstruction(CharacterTypes selectedCharacter)
+        ActionTypes GetAction()
         {
-            switch (selectedCharacter)
-            {
-                case (CharacterTypes.Warrior):
-                    character = new Warrior();
-                    break;
-                case (CharacterTypes.Magician):
-                    character = new Magician();
-                    break;
-            }
-            ActionTypes action;
-            bool isExitKeyPressed = false;
-            while (!isExitKeyPressed)
-            {
-                Console.WriteLine(String.Format("Select action. {0} - make a step. {1} - jump. {2} - sit down. {3} - special action. {4} - exit.",
+            Console.WriteLine(String.Format("Select action. {0} - make a step. {1} - jump. {2} - sit down. {3} - special action. {4} - exit.",
                                (int)ActionTypes.Step,
                                (int)ActionTypes.Jump,
                                (int)ActionTypes.SitDown,
                                (int)ActionTypes.SpecialAction,
                                (int)ActionTypes.Exit));
-                if (int.TryParse(Console.ReadLine(), out int pressedKey))
+
+            int pressedKey = -1;
+            bool isKeyDefined = false;
+
+            while (!isKeyDefined)
+            {
+                int.TryParse(Console.ReadLine(), out pressedKey);
+                isKeyDefined = Enum.IsDefined(typeof(ActionTypes), pressedKey);
+
+                if (!isKeyDefined)
                 {
-                    action = (ActionTypes)Convert.ToInt32(pressedKey);
-                    if (action != ActionTypes.Exit)
-                    {
-                        if (selectedCharacter == CharacterTypes.Warrior)
-                        {
-                            ExecuteAction(action);
-                        }
-                        else
-                        {
-                            ExecuteAction(action);
-                        }
-                    }
-                    else
-                    {
-                        isExitKeyPressed = true;
-                    }
-                    
+                    Console.WriteLine("Something went wrong. Try again.");
                 }
+            }
+
+            return (ActionTypes)pressedKey;
+        }
+
+        void Play(CharacterTypes selectedCharacter)
+        {
+            switch (selectedCharacter)
+            {
+                case (CharacterTypes.Warrior):
+                    _character = new Warrior();
+                    break;
+                case (CharacterTypes.Magician):
+                    _character = new Magician();
+                    break;
+            }
+
+            bool isExitKeyPressed = false;
+
+            while (!isExitKeyPressed)
+            {
+                var action = GetAction();
+
+                isExitKeyPressed = action == ActionTypes.Exit;
+                if(isExitKeyPressed)
+                {
+                    return;
+                }
+                ExecuteAction(action);
             }
         }
 
@@ -75,20 +87,18 @@ namespace MagiciansAgainstWarriorsGame
             switch (action)
             {
                 case ActionTypes.Step:
-                    character.Step();
+                    _character.Step();
                     break;
                 case ActionTypes.Jump:
-                    character.Jump();
+                    _character.Jump();
                     break;
                 case ActionTypes.SitDown:
-                    character.SitDown();
+                    _character.SitDown();
                     break;
                 case ActionTypes.SpecialAction:
-                    character.SpecialAction();
+                    _character.SpecialAction();
                     break;
-                default:
-                    Console.WriteLine("Something went wrong. Try again.");
-                    break;
+
             }
         }
     }
