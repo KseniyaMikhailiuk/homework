@@ -1,123 +1,93 @@
 ﻿using System;
 
-
 namespace MagiciansAgainstWarriorsGame
 {
     public class GameProcess
     {
-        enum Action
-        {
-            Step = 1,
-            Jump,
-            SitDown,
-            SpacialAction,
-            Exit
-        }
-        enum eCharacter
-        {
-            Warrior = 1,
-            Magician
-        }
-        
+        public Character character;
         public void StartGame()
         {
-            eCharacter character;
+            CharacterTypes character;
             bool isCharacterSelected = false;
             while (!isCharacterSelected)
             {
-                Console.WriteLine("Select character. 1 - warrior. 2 - magician.");
+                Console.WriteLine(String.Format("Select character. {0} - warrior. {1} - magician.",
+                                                (int)CharacterTypes.Warrior,
+                                                (int)CharacterTypes.Magician));
                 if (int.TryParse(Console.ReadLine(), out int selectedCharacter))
                 {
-                    if (Enum.IsDefined((typeof(eCharacter)), selectedCharacter))
+                    if (Enum.IsDefined((typeof(CharacterTypes)), selectedCharacter))
                     {
-                        character = (eCharacter)Convert.ToInt32(selectedCharacter);
+                        character = (CharacterTypes)Convert.ToInt32(selectedCharacter);
                         isCharacterSelected = true;
-                        if (character == eCharacter.Warrior)
-                        {
-                            GetInstraction(eCharacter.Warrior);
-                        }
-                        else
-                        {
-                            GetInstraction(eCharacter.Magician);
-                        }
+                        GetInstruction(character);
                     }
                 }
             }
-
         }
 
-        static void GetInstraction(eCharacter character)
+        void GetInstruction(CharacterTypes selectedCharacter)
         {
-            var warrior = new Warrior();
-            var magician = new Magician();
-            Action action;
-            while (true)
+            switch (selectedCharacter)
             {
-                Console.WriteLine("Select action. 1 - make a step. 2 - jump. 3 - sit down. 4 - special action. 5 - exit.");
+                case (CharacterTypes.Warrior):
+                    character = new Warrior();
+                    break;
+                case (CharacterTypes.Magician):
+                    character = new Magician();
+                    break;
+            }
+            ActionTypes action;
+            bool isExitKeyPressed = false;
+            while (!isExitKeyPressed)
+            {
+                Console.WriteLine(String.Format("Select action. {0} - make a step. {1} - jump. {2} - sit down. {3} - special action. {4} - exit.",
+                               (int)ActionTypes.Step,
+                               (int)ActionTypes.Jump,
+                               (int)ActionTypes.SitDown,
+                               (int)ActionTypes.SpecialAction,
+                               (int)ActionTypes.Exit));
                 if (int.TryParse(Console.ReadLine(), out int pressedKey))
                 {
-                    if (Enum.IsDefined((typeof(Action)), pressedKey))
+                    action = (ActionTypes)Convert.ToInt32(pressedKey);
+                    if (action != ActionTypes.Exit)
                     {
-                        action = (Action)Convert.ToInt32(pressedKey);
-                        if (character == eCharacter.Warrior)
+                        if (selectedCharacter == CharacterTypes.Warrior)
                         {
-                            RealizeGameProcessWarrior(action, warrior);
+                            ExecuteAction(action);
                         }
                         else
                         {
-                            RealizeGameProcessMagician(action, magician);
+                            ExecuteAction(action);
                         }
-                        continue;
                     }
-                }
-                Console.WriteLine("Something went wrong. Try again.");
-            }
-        }
-
-        static void RealizeGameProcessWarrior(Action action, Warrior warrior)
-        {
-            if ((((int)action < 4) && (action > 0)) || ((int)action == 5))
-            {
-                RealizeGameProcessCharacter(warrior, action);
-            }
-            else
-            {
-                if (action == Action.SpacialAction)
-                {
-                    warrior.HitWithSword();
+                    else
+                    {
+                        isExitKeyPressed = true;
+                    }
+                    
                 }
             }
         }
 
-        static void RealizeGameProcessMagician(Action action, Magician magician)
-        {
-            if ((((int)action < 4) && (action > 0)) || ((int)action == 5))
-            {
-                RealizeGameProcessCharacter(magician, action);
-            }
-            else
-            {
-                if (action == Action.SpacialAction)
-                {
-                    magician.CastSpell();
-                }
-            }    
-        }
-        static void RealizeGameProcessCharacter(Character character, Action action)
+        void ExecuteAction(ActionTypes action)
         {
             switch (action)
             {
-                case Action.Step:
+                case ActionTypes.Step:
                     character.Step();
                     break;
-                case Action.Jump:
+                case ActionTypes.Jump:
                     character.Jump();
                     break;
-                case Action.SitDown:
+                case ActionTypes.SitDown:
                     character.SitDown();
                     break;
-                case Action.Exit:
-                    Environment.Exit(0);
+                case ActionTypes.SpecialAction:
+                    character.SpecialAction();
+                    break;
+                default:
+                    Console.WriteLine("Something went wrong. Try again.");
                     break;
             }
         }

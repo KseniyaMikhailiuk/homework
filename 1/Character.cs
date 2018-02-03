@@ -16,5 +16,6 @@ namespace MagiciansAgainstWarriorsGame
         {
             Console.WriteLine("Your character sat down");
         }
+        public abstract void SpecialAction();
     }
 }

@@ -42,7 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionTypes.cs" />
     <Compile Include="Character.cs" />
+    <Compile Include="CharacterTypes.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="GameProcess.cs" />
     <Compile Include="Magician.cs" />
     <Compile Include="Program.cs" />

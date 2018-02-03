@@ -4,7 +4,7 @@ namespace MagiciansAgainstWarriorsGame
 {
     public class Magician : Character
     {
-        public void CastSpell()
+        public override void SpecialAction()
         {
             Console.WriteLine("Your character cast a spell");
         }
